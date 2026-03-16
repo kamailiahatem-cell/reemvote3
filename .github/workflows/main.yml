@@ -1,0 +1,28 @@
+name: Run Voting Script
+
+# إمتى السكريبت يشتغل؟
+on:
+  workflow_dispatch: # السطر ده بيعملك زرار في جيت هاب عشان تشغله يدوي في أي وقت تحبه
+  # schedule:
+  #  - cron: '0 * * * *' # لو شلت علامة الـ # من هنا، السكريبت هيشتغل أوتوماتيك كل ساعة
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # هنشغله على سيرفر أوبونتو بتاع جيت هاب
+
+    steps:
+      - name: Checkout repository files
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13' # نسخة البايثون
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run the Python script
+        run: python -u main.py
